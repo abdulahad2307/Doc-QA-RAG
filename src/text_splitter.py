@@ -1,6 +1,6 @@
 """Split documents into chunks optimized for retrieval."""
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 from typing import List
 
 def create_splitter(
@@ -28,5 +28,5 @@ def split_documents(
     for i, chunk in enumerate(chunks):
         chunk.metadata["chunk_index"] = i
     
-    print(f"📄 Split {len(documents)} documents into {len(chunks)} chunks")
+    print(f"Split {len(documents)} documents into {len(chunks)} chunks")
     return chunks

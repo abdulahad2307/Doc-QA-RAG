@@ -1,7 +1,7 @@
 """Load documents from various sources (PDF, TXT, MD)."""
 from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
-from langchain.schema import Document
+from langchain_core.documents import Document
 from typing import List
 
 def load_document(file_path: str) -> List[Document]:
@@ -33,7 +33,7 @@ def load_multiple_documents(file_paths: List[str]) -> List[Document]:
         try:
             docs = load_document(path)
             all_docs.extend(docs)
-            print(f"✅ Loaded {path}: {len(docs)} pages/sections")
+            print(f"Loaded {path}: {len(docs)} pages/sections")
         except Exception as e:
-            print(f"❌ Failed to load {path}: {e}")
+            print(f"Failed to load {path}: {e}")
     return all_docs
