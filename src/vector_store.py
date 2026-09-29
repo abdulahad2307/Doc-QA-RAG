@@ -2,7 +2,6 @@
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from typing import List, Optional
-import shutil
 from pathlib import Path
 
 PERSIST_DIR = "./data/chroma_db"
@@ -13,9 +12,14 @@ def create_vector_store(
     collection_name: str = "documents",
 ) -> Chroma:
     """Create a new vector store from documents."""
-    # Clear existing store
+    # Clear existing store through Chroma: deleting the directory while a
+    # client is still open in this process leaves it read-only
     if Path(PERSIST_DIR).exists():
-        shutil.rmtree(PERSIST_DIR)
+        Chroma(
+            persist_directory=PERSIST_DIR,
+            embedding_function=embedding_model,
+            collection_name=collection_name,
+        ).delete_collection()
     
     vector_store = Chroma.from_documents(
         documents=documents,
