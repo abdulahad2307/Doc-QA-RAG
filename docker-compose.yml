@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    image: doc-qa-rag
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env  # ANTHROPIC_API_KEY is passed in at run time, never baked into the image
+    volumes:
+      - ./data:/app/data  # keeps the ChromaDB store across container restarts
+    restart: unless-stopped
